@@ -1,0 +1,13 @@
+-- Git version control
+    -- branching
+    -- gitignore files
+-- Node js
+    -- models
+    -- controllers
+    -- routes
+-- Configuring a server
+-- Connecting a database to a server
+-- Mongodb
+-- Using mongodb compass
+-- Json format and data representation
+-- Using postman to test api's with GET/POST and raw data

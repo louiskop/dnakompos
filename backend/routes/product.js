@@ -5,10 +5,10 @@ const { get } = require('mongoose');
 const router = express.Router();
 
 // internal imports
-const { getProducts } = require('../controllers/productController');
+const { createProduct } = require('../controllers/productController');
 
-// test routes
-router.route('/products').get(getProducts);
+// configure routes
+router.route('/product/new').post(createProduct);
 
 
 // export routes

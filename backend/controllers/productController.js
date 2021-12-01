@@ -1,8 +1,18 @@
 
-// test controller
-exports.getProducts = (req, res, next) => {
-    res.status(200).json({
-        success: true,
-        message: "Hos hierdie route wys al die produckte in die db"
+// import models
+const Product = require('../models/product');
+
+
+// create product => /api/product/new
+exports.createProduct = async (req, res, next) => {
+
+    // create new product
+    const product = await Product.create(req.body);
+    
+    // send new product
+    res.status(201).json({
+        success : true,
+        product,
     });
+
 };
