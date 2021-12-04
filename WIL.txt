@@ -5,6 +5,12 @@
     -- models
     -- controllers
     -- routes
+    -- writing middleware (for errors)
+    -- different error formatting for developers and users
+    -- async error handling (without try catch block wrapping)
+-- npm
+    --enviornment variables
+    --dependency management (dev-dependency vs normal dependency)
 -- Configuring a server
 -- Connecting a database to a server
 -- Mongodb
