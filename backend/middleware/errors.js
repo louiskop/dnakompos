@@ -24,6 +24,18 @@ module.exports = (err, req, res, next) => {
         
         err.message = err.message || "Internal Server Error";
 
+        // mongoose wrong object id error
+        if(err.name === 'CastError'){
+            const message = `Resource not found. Invalid: ${err.path}`;
+            err = new ErrorHandler(message,400);
+        }
+
+        // mongoose validation errors
+        if(err.name === 'ValidationError'){
+            const message = Object.values(err.errors).map(value => value.message);
+            err = new ErrorHandler(message, 400);
+        }
+
         res.status(err.statusCode).json({
             success : false,
             message: err.message,

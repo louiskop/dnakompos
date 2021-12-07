@@ -6,6 +6,17 @@ const dotenv = require('dotenv');
 const app = require('./app');
 const connectDB = require('./config/database');
 
+// handle uncaught exceptions
+process.on('uncaughtException', err => {
+    console.log(`[!] ERROR: ${err.message}`);
+    // uncomment for detailed stack
+    // console.log(`[!] ERROR STACK ${err.stack}`);
+    console.log("[-] Shutting down server: uncaught exception");
+    process.exit(1);
+    
+
+})
+
 // load config file
 dotenv.config({path : 'backend/config/config.env'});
 
@@ -25,7 +36,7 @@ const server = app.listen(
 process.on('unhandledRejection', (err) => {
 
     // print errors
-    console.log(`[-] ERROR: ${err.message}`);
+    console.log(`[!] ERROR: ${err.message}`);
     console.log("[-] Shutting down server: unhandled promise rejection");
 
     // shut the server down
