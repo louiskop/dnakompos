@@ -28,9 +28,13 @@ exports.createProduct = asyncErrors(async (req, res, next) => {
 // get all products => /api/products (?keyword=xyz)
 exports.getProducts = asyncErrors(async (req, res, next) => {
 
-    
+    // pagination
+    const resultsPerPage = 2;
+    const productCount = await Product.countDocuments();
+
+
     // new ApiFeatures instance for search, filtering, pagination
-    const apiFeatures = new ApiFeatures(Product.find(), req.query).search().filter();
+    const apiFeatures = new ApiFeatures(Product.find(), req.query).search().filter().pagination(resultsPerPage);
 
     // get all products
     const products = await apiFeatures.query;
@@ -39,6 +43,7 @@ exports.getProducts = asyncErrors(async (req, res, next) => {
     res.status(200).json({
         success: true,
         count: products.length,
+        totalProductCount: productCount,
         products,
     });
 

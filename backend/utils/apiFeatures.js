@@ -27,6 +27,7 @@ class ApiFeatures {
         return this;
     }
 
+
     filter(){
     
         const queryStrCopy = {...this.queryStr};
@@ -43,6 +44,20 @@ class ApiFeatures {
 
         // update query with filtered items (in json format)
         this.query = this.query.find(JSON.parse(stringOfQueryStr));
+
+        return this;
+    }
+
+    
+    pagination(resultsPerPage){
+
+        // get current page or default
+        const currentPage = Number(this.queryStr.page) || 1;
+        // compute the index of items to display on page
+        const startAt = resultsPerPage * (currentPage - 1);
+
+        // limit amount of docs to be returned and skip to start position 
+        this.query = this.query.limit(resultsPerPage).skip(startAt);
 
         return this;
     }
