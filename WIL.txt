@@ -14,6 +14,7 @@
     -- simple api filtering with parameters
     -- advanced api filtering with ranges (gt,lt,gte,lte)
     -- regular expressions in javascript
+    -- validation using npm package validator on models
 -- npm
     --enviornment variables
     --dependency management (dev-dependency vs normal dependency)
