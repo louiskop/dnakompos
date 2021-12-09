@@ -5,6 +5,7 @@ const app = express();
 
 // import routes
 const productRoutes = require('./routes/product');
+const userRoutes = require('./routes/user');
 
 // import middleware
 const errorMiddleware = require('./middleware/errors');
@@ -14,6 +15,7 @@ app.use(express.json());
 
 // configure routes
 app.use('/api/', productRoutes);
+app.use('/api/', userRoutes)
 
 // configure middleware
 app.use(errorMiddleware);

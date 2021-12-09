@@ -1,6 +1,8 @@
 
 // package imports
 const mongoose = require('mongoose');
+const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 // create schema
 const userSchema = new mongoose.Schema({
@@ -21,7 +23,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String, 
         required: [true, 'Please enter your password'],
-        minLength: [6, 'Your password must be longer than 6 characters'],
+        minlength: [6, 'Your password must be longer than 6 characters'],
         select: false,
     },
 
@@ -45,4 +47,20 @@ const userSchema = new mongoose.Schema({
 
 });
 
-mongoose.exports = mongoose.model('User', userSchema);
+// encrypt passwords before saving (no arrow func, because of 'this')
+userSchema.pre('save', async function(next){
+
+    // check if password was updated
+    if(!this.isModified('password')){
+        next();
+    }
+
+    // encrypt (length of hash = 10)
+    this.password = await bcrypt.hash(this.password, 10);
+
+
+});
+
+
+// export schema
+module.exports = mongoose.model('User', userSchema);

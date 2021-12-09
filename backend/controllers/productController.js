@@ -38,7 +38,8 @@ exports.getProducts = asyncErrors(async (req, res, next) => {
 
     // get all products
     const products = await apiFeatures.query;
-    // send productss
+    
+    // send products
     res.status(200).json({
         success: true,
         count: products.length,
