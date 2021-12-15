@@ -22,6 +22,8 @@
     -- regular expressions
     -- validation using npm package validator on models
     -- encypting a password before saving into the database
+    -- adding a method to mongoose schema (models)
+    -- JSON web tokens (JWT) and how to return it
 -- npm
     --enviornment variables
     --dependency management (dev-dependency vs normal dependency)

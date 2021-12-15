@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 // create schema
 const userSchema = new mongoose.Schema({
@@ -57,9 +58,16 @@ userSchema.pre('save', async function(next){
 
     // encrypt (length of hash = 10)
     this.password = await bcrypt.hash(this.password, 10);
-
-
 });
+
+// return JSON web token (JWT) with a method
+userSchema.methods.getJWT = function() {
+
+    // return token with user id and jwt secret and expiry
+    return jwt.sign({id: this._id}, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_TIME
+    });
+};
 
 
 // export schema

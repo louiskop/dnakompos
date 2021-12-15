@@ -22,9 +22,13 @@ exports.registerUser = asyncErrors( async (req, res, next) => {
         email,
     });
 
+    // get JWT 
+    const token = user.getJWT();
+
+    // send back user JWT
     res.status(201).json({
         success: true,
-        user,
+        token,
     });
     
 });
