@@ -69,6 +69,12 @@ userSchema.methods.getJWT = function() {
     });
 };
 
+// compare user password
+userSchema.methods.comparePassword = async function(enteredPassword) {
+    
+    return await bcrypt.compare(enteredPassword, this.password);
+};
+
 
 // export schema
 module.exports = mongoose.model('User', userSchema);

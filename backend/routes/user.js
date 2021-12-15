@@ -4,10 +4,11 @@ const express = require('express');
 const router = express.Router();
 
 // internal imports
-const { registerUser } = require('../controllers/userController');
+const { registerUser, loginUser } = require('../controllers/userController');
 
 // configure routes
 router.route('/user/register').post(registerUser);
+router.route('/user/login').post(loginUser);
 
 // export routes
 module.exports = router;

@@ -32,3 +32,40 @@ exports.registerUser = asyncErrors( async (req, res, next) => {
     });
     
 });
+
+// login user => /api/login
+exports.loginUser = asyncErrors( async (req, res, next) => {
+
+    // get email and password of user
+    const {email, password} = req.body;
+
+    // validate email and password is entered
+    if(!email || !password){
+        return next(new ErrorHandler('Please enter email and password', 400));
+    }
+
+    // find user in db
+    const user = await User.findOne({email}).select('+password');
+
+    // check if user exists
+    if(!user){
+        return next(new ErrorHandler('Invalid email or password', 401));
+    }
+
+    // check if password is correct
+    const isPasswordCorrect = await User.comparePassoword(password);
+
+    if(!isPasswordCorrect){
+        return next(new ErrorHandler('Invalid email or password', 401));
+    }
+
+    // get JWT
+    const token = user.getJWT();
+
+    // send back user token
+    res.status(200).json({
+        success: true,
+        token
+    });
+
+}); 

@@ -24,6 +24,7 @@
     -- encypting a password before saving into the database
     -- adding a method to mongoose schema (models)
     -- JSON web tokens (JWT) and how to return it
+    -- log in a user and assign JWT to user
 -- npm
     --enviornment variables
     --dependency management (dev-dependency vs normal dependency)
