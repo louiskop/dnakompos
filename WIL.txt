@@ -25,6 +25,7 @@
     -- adding a method to mongoose schema (models)
     -- JSON web tokens (JWT) and how to return it
     -- log in a user and assign JWT to user
+    -- http only cookies & storing jwt in httponly cookie
 -- npm
     --enviornment variables
     --dependency management (dev-dependency vs normal dependency)

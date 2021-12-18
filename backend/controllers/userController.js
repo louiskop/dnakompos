@@ -8,6 +8,7 @@ const User = require('../models/user');
 const ErrorHandler = require('../utils/errorHandler');
 const asyncErrors = require('../middleware/asyncErrors');
 const ApiFeatures = require('../utils/apiFeatures');
+const sendToken = require('../utils/jwtToken');
 
 // register user => /api/register
 exports.registerUser = asyncErrors( async (req, res, next) => {
@@ -22,14 +23,7 @@ exports.registerUser = asyncErrors( async (req, res, next) => {
         email,
     });
 
-    // get JWT 
-    const token = user.getJWT();
-
-    // send back user JWT
-    res.status(201).json({
-        success: true,
-        token,
-    });
+    sendToken(user, 201, res);
     
 });
 
@@ -53,19 +47,12 @@ exports.loginUser = asyncErrors( async (req, res, next) => {
     }
 
     // check if password is correct
-    const isPasswordCorrect = await User.comparePassoword(password);
+    const isPasswordCorrect = await user.comparePassword(password);
 
     if(!isPasswordCorrect){
         return next(new ErrorHandler('Invalid email or password', 401));
     }
 
-    // get JWT
-    const token = user.getJWT();
-
-    // send back user token
-    res.status(200).json({
-        success: true,
-        token
-    });
+    sendToken(user, 200, res);
 
 }); 
