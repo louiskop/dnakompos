@@ -10,8 +10,6 @@ const jwt = require('jsonwebtoken');
 // check whether user is authenticated
 exports.isAuthenticatedUser = asyncErrors( async (req, res, next) => {
 
-    console.log("[+] Running authenticatedUser middleware ... ");
-    
     // get jwt from cookie
     const { token } = req.cookies;
 
@@ -28,3 +26,20 @@ exports.isAuthenticatedUser = asyncErrors( async (req, res, next) => {
 
     next();
 });
+
+// user roles for authorization
+exports.authRoles = (...roles) => {
+
+    return (req, res, next) => {
+
+        if (!roles.includes(req.user.role)){
+
+            // user does not have the correct role
+            return next(new ErrorHandler(`Role (${req.user.role}) is not allowed to access this resource`, 403));
+        }
+
+        next();
+    };
+};
+
+
