@@ -1,3 +1,4 @@
+
 // create + send json web token & save in the cookie
 
 const sendToken = (user, statusCode, res) => {
