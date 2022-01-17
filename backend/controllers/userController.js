@@ -11,6 +11,9 @@ const ApiFeatures = require('../utils/apiFeatures');
 const sendToken = require('../utils/jwtToken');
 const sendEmail = require('../utils/sendEmail');
 
+// package imports
+const crypto = require('crypto');
+
 // register user => /api/register
 exports.registerUser = asyncErrors( async (req, res, next) => {
 
@@ -58,7 +61,7 @@ exports.loginUser = asyncErrors( async (req, res, next) => {
 
 }); 
 
-// forgot password => /api/password/forgot
+// forgot password => /api/user/password/forgot
 exports.forgotPassword = asyncErrors( async (req, res, next) => {
 
     // find user in db
@@ -76,7 +79,7 @@ exports.forgotPassword = asyncErrors( async (req, res, next) => {
     await user.save({ validateBeforeSave : false });
 
     // create reset password url
-    const resetURL = `${req.protocol}://${req.get('host')}/api/password/reset/${resetToken}`;
+    const resetURL = `${req.protocol}://${req.get('host')}/api/user/password/reset/${resetToken}`;
 
     // create reset message
     const message = `Your password reset token : \n\n${resetURL}\n\n If you have not requested this email, you can ignore this message.`;
@@ -110,6 +113,42 @@ exports.forgotPassword = asyncErrors( async (req, res, next) => {
     }
 
 
+});
+
+// reset password => /api/user/password/reset/:token
+exports.resetPassword = asyncErrors( async (req, res, next) => {
+
+    // hash URL token
+    const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
+
+    // get user with that token
+    const user = await User.findOne({ 
+        resetPasswordToken,
+        resetPasswordExpire: { $gt: Date.now() },
+    });
+
+    // check if user exists
+    if(!user){
+        return next(new ErrorHandler('Password reset token is invalid or has expired.',400));
+    }
+
+    // check if the passwords match
+    if(req.body.password !== req.body.confirmPassword){
+        return next(new ErrorHandler('Passwords do not match.', 400));
+    }
+
+    // set new password
+    user.password = req.body.password;
+
+    // set password reset token & expiry date
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    // save user
+    await user.save();
+
+    // return jwt 
+    sendToken(user, 200, res);
 });
 
 // logout user => /api/logout

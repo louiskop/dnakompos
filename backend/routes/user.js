@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 // internal imports
-const { registerUser, loginUser, logoutUser, forgotPassword } = require('../controllers/userController');
+const { registerUser, loginUser, logoutUser, forgotPassword, resetPassword } = require('../controllers/userController');
 
 // configure routes
 router.route('/user/register').post(registerUser);
@@ -12,6 +12,7 @@ router.route('/user/login').post(loginUser);
 router.route('/user/logout').get(logoutUser);
 
 router.route('/user/password/forgot').post(forgotPassword);
+router.route('/user/password/reset/:token').put(resetPassword);
 
 // export routes
 module.exports = router;
