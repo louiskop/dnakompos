@@ -228,3 +228,38 @@ exports.updateDetails = asyncErrors( async (req, res, next) => {
     });
 
 });
+
+// admin routes
+
+// get all users => /api/admin/users
+exports.getUsers = asyncErrors( async (req, res, next) => {
+    
+    // get all users
+    const users = await User.find();
+
+    // return in res
+    res.status(200).json({
+        success: true,
+        users, 
+    });
+
+});
+
+// get any user details => /api/admin/user/:id
+exports.getAnyUserDetails = asyncErrors( async (req, res, next) => {
+
+    // get user
+    const user = await User.findById(req.params.id);
+
+    // check if user exists
+    if(!user){
+        return next(new ErrorHandler(`User not found with id ${req.params.id}.`, 400));
+    }
+
+    // send res
+    res.status(200).json({
+        success: true,
+        user
+    });
+
+});
