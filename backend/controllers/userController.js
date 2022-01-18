@@ -216,7 +216,7 @@ exports.updateDetails = asyncErrors( async (req, res, next) => {
     };
 
     // get and update user
-    const user = User.findByIdAndUpdate(req.user.id, newUserData, {
+    const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
         new: true,
         runValidators: true,
         useFindAndModify: false,
@@ -260,6 +260,51 @@ exports.getAnyUserDetails = asyncErrors( async (req, res, next) => {
     res.status(200).json({
         success: true,
         user
+    });
+
+});
+
+// update any user details => /api/admin/user/:id
+exports.updateAnyUserDetails = asyncErrors( async (req, res, next) => {
+
+    // get updated data
+    const newUserData = { 
+        name : req.body.name,
+        email : req.body.email,
+        role : req.body.role,
+    };
+
+    // get and update user
+    const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+    });
+
+    // send res
+    res.status(200).json({
+        success: true,
+    });
+
+});
+
+// delete user => /api/admin/user/:id
+exports.deleteUser = asyncErrors( async (req, res, next) => {
+
+    // get user
+    const user = await User.findById(req.params.id);
+
+    // check if user exists
+    if(!user){
+        return next(new ErrorHandler(`User not found with id ${req.params.id}.`, 400));
+    }
+
+    // delete user
+    await user.remove();
+
+    // send res 
+    res.status(200).json({
+        success: true,
     });
 
 });
