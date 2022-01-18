@@ -14,7 +14,7 @@ const sendEmail = require('../utils/sendEmail');
 // package imports
 const crypto = require('crypto');
 
-// register user => /api/register
+// register user => /api/user/register
 exports.registerUser = asyncErrors( async (req, res, next) => {
 
     // get user details from req.body
@@ -31,7 +31,7 @@ exports.registerUser = asyncErrors( async (req, res, next) => {
     
 });
 
-// login user => /api/login
+// login user => /api/user/login
 exports.loginUser = asyncErrors( async (req, res, next) => {
 
     // get email and password of user
@@ -151,7 +151,7 @@ exports.resetPassword = asyncErrors( async (req, res, next) => {
     sendToken(user, 200, res);
 });
 
-// logout user => /api/logout
+// logout user => /api/user/logout
 exports.logoutUser = asyncErrors( async (req, res, next) => {
 
     // clear the token on the cookie
@@ -164,6 +164,20 @@ exports.logoutUser = asyncErrors( async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: "Logged out"
+    });
+
+});
+
+// user details => /api/user/details
+exports.userDetails = asyncErrors( async (req, res, next) => {
+
+    // get user
+    const user = await User.findById(req.user.id);
+
+    // send the user in res
+    res.status(200).json({
+        sucess: true,
+        user
     });
 
 });
