@@ -176,7 +176,7 @@ exports.userDetails = asyncErrors( async (req, res, next) => {
 
     // send the user in res
     res.status(200).json({
-        sucess: true,
+        success: true,
         user
     });
 
@@ -203,5 +203,28 @@ exports.updatePassword = asyncErrors( async (req, res, next) => {
 
     // return res & jwt
     sendToken(user, 200, res);
+
+});
+
+// update details => /api/user/details/update
+exports.updateDetails = asyncErrors( async (req, res, next) => {
+
+    // get updated data
+    const newUserData = { 
+        name : req.body.name,
+        email : req.body.email,
+    };
+
+    // get and update user
+    const user = User.findByIdAndUpdate(req.user.id, newUserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+    });
+
+    // send res
+    res.status(200).json({
+        success: true,
+    });
 
 });
