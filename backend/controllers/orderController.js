@@ -6,7 +6,7 @@ const Product = require('../models/product');
 const ErrorHandler = require('../utils/errorHandler');
 const asyncErrors = require('../middleware/asyncErrors');
 
-// create new order
+// create new order => /api/order/new
 exports.newOrder = asyncErrors( async (req, res, next) => {
 
     // get info from req
@@ -35,6 +35,39 @@ exports.newOrder = asyncErrors( async (req, res, next) => {
     res.status(200).json({
         successs: true,
         order
+    });
+
+});
+
+// get single order => /api/order/:id
+exports.getSingleOrder = asyncErrors( async (req, res, next) => {
+
+    //get order and populate
+    const order = await Order.findById(req.params.id).populate('user', 'name email');
+
+    // check if order exists
+    if(!order){
+        return next(new ErrorHandler(`No order found with id: ${req.params.id}`, 404));
+    }
+
+    // return order
+    res.status(200).json({
+        sucess: true,
+        order,
+    })
+
+});
+
+// get current user orders => /api/order/me
+exports.getActiveUserOrders = asyncErrors( async (req, res, next) => {
+
+    // get all orders
+    const orders = await Order.find({ user: req.user.id });
+
+    // return orders
+    res.status(200).json({
+        sucess: true,
+        orders
     });
 
 });
