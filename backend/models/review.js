@@ -5,7 +5,11 @@ const mongoose = require('mongoose');
 // create schema
 const reviewSchema = mongoose.Schema({
 
-    // user : {}
+    user : {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'User',
+        required: true,        
+    },
 
     body : {
         type: String,
@@ -20,7 +24,6 @@ const reviewSchema = mongoose.Schema({
 
 
 });
-
 
 // export schema
 module.exports = mongoose.model(

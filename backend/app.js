@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const productRoutes = require('./routes/product');
 const userRoutes = require('./routes/user');
 const orderRoutes = require('./routes/order');
+const reviewRoutes = require('./routes/review');
 
 // import middleware
 const errorMiddleware = require('./middleware/errors');
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use('/api/', productRoutes);
 app.use('/api/', userRoutes);
 app.use('/api/', orderRoutes);
+app.use('/api/', reviewRoutes);
 
 // configure middleware
 app.use(errorMiddleware);
