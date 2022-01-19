@@ -71,3 +71,27 @@ exports.getActiveUserOrders = asyncErrors( async (req, res, next) => {
     });
 
 });
+
+// get all orders => /api/admin/orders
+exports.getAllOrders = asyncErrors( async (req, res, next) => {
+
+    // get all orders
+    const orders = await Order.find();
+
+    // get total amount received
+    let totalAmount = 0;
+
+    orders.forEach(order => {
+        totalAmount += order.totalPrice;
+    });
+
+    // return orders
+    res.status(200).json({
+        success: true,
+        count: orders.length,
+        totalAmount,
+        orders,
+    });
+
+
+});
