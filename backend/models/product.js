@@ -24,6 +24,11 @@ const productSchema = new mongoose.Schema({
         required: [true, 'Please enter product description'],
     },
 
+    stock : {
+        type: Number,
+        required: [true, 'Please specify amount of stock'],
+    },
+
     images : [{
 
         public_id : {

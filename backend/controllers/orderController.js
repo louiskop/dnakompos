@@ -72,6 +72,8 @@ exports.getActiveUserOrders = asyncErrors( async (req, res, next) => {
 
 });
 
+// admin routes
+
 // get all orders => /api/admin/orders
 exports.getAllOrders = asyncErrors( async (req, res, next) => {
 
@@ -93,5 +95,53 @@ exports.getAllOrders = asyncErrors( async (req, res, next) => {
         orders,
     });
 
+});
+
+// update & process orders => api/admin/order/:id
+exports.processOrder = asyncErrors(async (req, res, next) => {
+
+    // get order
+    const order = await Order.findById(req.params.id);
+
+    // check if order exists
+    if(!order){
+        return next(new ErrorHandler(`No order found with id: ${req.params.id}`, 404));
+    }
+
+    // check if order has been delivered
+    if(order.orderStatus === 'Delivered'){
+        return next(new ErrorHandler('You have already delivered this order', 400));
+    }
+
+    // update stock
+    order.itemsOrdered.forEach(async (item) => {
+        await updateStock(item.product, item.quantity);
+    });
+
+    // change order status
+    order.orderStatus = req.body.orderStatus;
+    order.deliveredAt = Date.now();
+
+    // save the order
+    await order.save({ validateBeforeSave: false});
+    
+    // send res
+    res.status(200).json({
+        success: true,
+    });
 
 });
+
+// function for stock updating
+async function updateStock(id, quantity){
+    
+    // get product
+    const product = await Product.findById(id);
+
+    // decrease stock
+    product.stock = product.stock - quantity;
+
+    // save product
+    await product.save({ validateBeforeSave: false });
+
+}
