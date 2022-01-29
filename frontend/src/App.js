@@ -1,10 +1,15 @@
 
 import './App.css';
 
+// component imports
+import Header from './components/layout/Header';
+import HomePage from './components/pages/HomePage';
+
 function App() {
   return (
     <div className="App">
-      <h1>Dna Kompos</h1>
+      <Header/>
+      <HomePage/>
     </div>
   );
 }

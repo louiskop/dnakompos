@@ -27,6 +27,12 @@
     -- log in a user and assign JWT to user
     -- http only cookies & storing jwt in httponly cookie
     -- Using mailtrap and nodemailer to send automatic emails for password recovery
+-- React
+    -- React project setup
+    -- Create & export basic functional component
+    -- <Fragment> tag for returning multiple children from react component
+-- css
+    --
 -- npm
     --enviornment variables
     --dependency management (dev-dependency vs normal dependency)
