@@ -1,0 +1,38 @@
+.product-page {
+    display: flex;
+    flex-direction: column;
+    height: 88vh;
+    justify-content: start;
+    align-items: center;
+    padding-left: 8%;
+    padding-right: 8%;
+}
+
+.product {
+   display: flex;
+   flex-direction: row;
+   justify-content: start;
+   align-items: center; 
+   border: 1px solid black;
+   padding: 4rem;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    height: 100%;
+    width: 100%;
+}
+
+.product-img {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-img img {
+    height: 30rem;
+}

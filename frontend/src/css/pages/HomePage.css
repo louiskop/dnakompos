@@ -1,0 +1,47 @@
+
+.home {
+    display: flex;
+    flex-direction: row;
+    height: 88vh;
+}
+
+.hero {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding-left: 8%;
+
+}
+
+.hero_image {
+    flex-grow: 1;
+    
+}
+
+.whitespace{
+    height: 55vh;
+}
+
+.open-paragraph {
+   text-align: left;
+   padding-right: 20%; 
+}
+
+.calltoaction {
+    padding-right: 20%;
+    padding-top: 5vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.hero h1 {
+    font-size: 8rem;
+    text-align: left;
+    height: 50%;
+    width: 35%;
+    font-weight: 900;
+
+    position: absolute;
+    top: 15vh;
+}

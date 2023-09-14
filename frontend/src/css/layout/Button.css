@@ -1,0 +1,14 @@
+.button {
+    background-color: green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15rem;
+    height: 3.5rem;
+    cursor: pointer;
+}
+
+.button p {
+    padding: 0;
+    text-align: center;
+}

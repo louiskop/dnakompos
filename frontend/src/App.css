@@ -1,58 +1,25 @@
 /* Font */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;700;900&display=swap');
 
 /* Style overriding */
 *{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
-/* Navigation bar */
-.navbar_main{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+body {
+    height: 100vh;
 }
 
-.navbar_links ul{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-decoration: none;
-    list-style-type: none;
-    
-}
-
-.navbar_links ul li{
-    margin: 0rem 3rem 0rem 3rem;
-}
-
-.navbar_links ul li a {
-    text-decoration: none;
-}
-
-.navbar_useritems img{
-    margin: 0rem 1rem 0rem 1rem;
-}
-
-/* Home Page */
-.home{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-
-.home_leftProduct{
-    background-color: aqua;
-    width: 100%;
+#root {
     height: 100%;
 }
 
-.home_rightProduct {
-    background-color: red;
+.App {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
